@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NANDANI ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:'Poppins',sans-serif;
+  color:white;
+  overflow-x:hidden;
+  background:black;
+}
+
+/* BACKGROUND */
+.slideshow{
+  position:fixed;
+  width:100%;
+  height:100%;
+  top:0;
+  left:0;
+  z-index:-3;
+}
+
+.slide{
+  position:absolute;
+  width:100%;
+  height:100%;
+  background-size:cover;
+  background-position:center;
+  opacity:0;
+  animation:fade 10s infinite;
+}
+
+.slide:nth-child(1){
+  background:url("img1.jpg") center/cover no-repeat;
+  animation-delay:0s;
+}
+
+.slide:nth-child(2){
+  background:url("img2.jpg") center/cover no-repeat;
+  animation-delay:5s;
+}
+
+@keyframes fade{
+  0%{opacity:0;}
+  10%{opacity:1;}
+  40%{opacity:1;}
+  50%{opacity:0;}
+  100%{opacity:0;}
+}
+
+.overlay{
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.5);
+  z-index:-2;
+}
+
+/* HEARTS */
+.hearts{
+  position:fixed;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+  overflow:hidden;
+  z-index:-1;
+}
+
+.heart{
+  position:absolute;
+  bottom:-50px;
+  font-size:20px;
+  animation:floatUp linear forwards;
+}
+
+@keyframes floatUp{
+  to{
+    transform:translate3d(0,-110vh,0);
+    opacity:0;
+  }
+}
+
+/* CARD */
+.wrapper{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:40px;
+}
+
+.card{
+  background:rgba(255,255,255,0.15);
+  backdrop-filter:blur(20px);
+  padding:50px;
+  border-radius:25px;
+  text-align:center;
+  max-width:550px;
+  box-shadow:0 0 40px rgba(255,105,180,0.5);
+  position:relative;
+}
+
+h1{
+  font-family:'Great Vibes',cursive;
+  font-size:60px;
+  color:#ff80ab;
+}
+
+button{
+  padding:12px 25px;
+  border-radius:30px;
+  border:none;
+  cursor:pointer;
+  margin:10px;
+  font-weight:600;
+  transition:0.3s;
+}
+
+.yes{
+  background:#ff4081;
+  color:white;
+}
+
+.no{
+  background:white;
+  color:black;
+  position:relative;
+}
+
+.music-btn{
+  position:absolute;
+  top:20px;
+  right:20px;
+  background:#ff4081;
+  color:white;
+}
+
+.letter{
+  display:none;
+  margin-top:20px;
+  font-family:'Great Vibes',cursive;
+  font-size:26px;
+}
+
+.gallery{
+  display:none;
+  margin-top:40px;
+  justify-content:center;
+  gap:30px;
+  flex-wrap:wrap;
+}
+
+.polaroid{
+  background:white;
+  padding:10px 10px 25px;
+  width:180px;
+  border-radius:5px;
+  box-shadow:0 15px 25px rgba(0,0,0,0.4);
+}
+
+.polaroid img{
+  width:100%;
+  height:200px;
+  object-fit:cover;
+}
+
+.caption{
+  color:#e91e63;
+  text-align:center;
+  margin-top:8px;
+  font-family:'Great Vibes',cursive;
+}
+
+.fullscreen{
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:black;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  z-index:999;
+}
+
+.fullscreen h1{
+  font-family:'Great Vibes',cursive;
+  font-size:70px;
+  color:#ff4081;
+}
+</style>
+</head>
+
+<body>
+
+<div class="slideshow">
+  <div class="slide"></div>
+  <div class="slide"></div>
+</div>
+
+<div class="overlay"></div>
+<div class="hearts" id="hearts"></div>
+
+<audio id="bgMusic" loop>
+  <source src="Romantic-Music.mp3" type="audio/mpeg">
+</audio>
+
+<div class="wrapper">
+<div class="card">
+
+<button class="music-btn" onclick="toggleMusic()">🎵</button>
+
+<h1>NANDANI ❤️</h1>
+
+<p id="typing"></p>
+
+<h2>I love you so much ❤️ Do you love me?</h2>
+
+<button class="yes" onclick="sayYes()">Yes ❤️</button>
+<button class="no" id="noBtn" onclick="moveNo()">No 😜</button>
+
+<div class="letter" id="letter">
+You are my today, tomorrow and forever ♾️❤️
+</div>
+
+<div class="gallery" id="gallery">
+  <div class="polaroid">
+    <img src="img3.jpg">
+    <div class="caption">Beautiful Moment 😍</div>
+  </div>
+  <div class="polaroid">
+    <img src="img4.jpg">
+    <div class="caption">Our Smile 💕</div>
+  </div>
+</div>
+
+</div>
+</div>
+
+<div class="fullscreen" id="finalScreen">
+<h1>She Said YES ❤️</h1>
+<p>Best Day Ever 💕</p>
+</div>
+
+<script>
+const text="From the moment you came into my life, everything feels magical. 🌹";
+let i=0;
+
+function typing(){
+ if(i<text.length){
+  document.getElementById("typing").innerHTML+=text.charAt(i);
+  i++;
+  setTimeout(typing,50);
+ }
+}
+typing();
+
+function moveNo(){
+ const btn=document.getElementById("noBtn");
+ const x=Math.random()*200-100;
+ const y=Math.random()*100-50;
+ btn.style.transform=`translate3d(${x}px,${y}px,0)`;
+}
+
+function sayYes(){
+ document.getElementById("letter").style.display="block";
+ document.getElementById("gallery").style.display="flex";
+ document.getElementById("bgMusic").play();
+
+ setTimeout(()=>{
+   document.getElementById("finalScreen").style.display="flex";
+ },5000);
+}
+
+function toggleMusic(){
+ const music=document.getElementById("bgMusic");
+ music.paused ? music.play() : music.pause();
+}
+
+setInterval(()=>{
+ const heart=document.createElement("div");
+ heart.className="heart";
+ heart.innerHTML="❤️";
+ heart.style.left=Math.random()*100+"%";
+ heart.style.animationDuration=(Math.random()*4+6)+"s";
+ document.getElementById("hearts").appendChild(heart);
+ setTimeout(()=>heart.remove(),10000);
+},800);
+</script>
+
+</body>
+</html>
